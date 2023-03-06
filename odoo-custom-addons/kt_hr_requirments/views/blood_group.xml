@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="hr_contract_history_view_form_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.inherited</field>
+        <field name="model">hr.contract.history</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_history_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='contract_history']" position="replace">
+                <page string="Agreement History" name="contract_history">
+                    <field name="contract_ids" widget="one2many" readonly="0">
+                        <tree string="Current Contracts"
+                              decoration-primary="state == 'open'"
+                              decoration-muted="state == 'close'"
+                              decoration-bf="id == parent.contract_id"
+                              default_order="date_start desc, state desc"
+                              editable="bottom"
+                              no_open="1"
+                              create="0" delete="0">
+                            <button name="action_open_contract_form" type="object" icon="fa-external-link"/>
+                            <field name="id" invisible="1"/>
+                            <field name="name" string="Contract Name"/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="resource_calendar_id"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="wage" string="Monthly Wage"/>
+                            <field name="state" widget="badge" decoration-info="state == 'draft'"
+                                   decoration-warning="state == 'close'" decoration-success="state == 'open'"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="employee_form_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.inherited</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_open_contract_history']" position="replace">
+                <button name="action_open_contract_history"
+                        class="oe_stat_button"
+                        icon="fa-book"
+                        type="object"
+                        groups="hr_contract.group_hr_contract_manager"
+                        attrs="{'invisible' : [('employee_type', 'not in', ['employee', 'student', 'trainee'])]}">
+                    <div attrs="{'invisible' : [('first_contract_date', '=', False)]}" class="o_stat_info">
+                        <span class="o_stat_text text-success" attrs="{'invisible' : [('contract_warning', '=', True)]}"
+                              title="In Agreement Since">In Agreement Since
+                        </span>
+                        <span class="o_stat_value text-success"
+                              attrs="{'invisible' : [('contract_warning', '=', True)]}">
+                            <field name="first_contract_date" readonly="1"/>
+                        </span>
+                        <span class="o_stat_text text-danger" attrs="{'invisible' : [('contract_warning', '=', False)]}"
+                              title="In Agreement Since">
+                            In Agreement Since
+                        </span>
+                        <span class="o_stat_value text-danger"
+                              attrs="{'invisible' : [('contract_warning', '=', False)]}">
+                            <field name="first_contract_date" readonly="1"/>
+                        </span>
+                    </div>
+                    <div attrs="{'invisible' : [('first_contract_date', '!=', False)]}" class="o_stat_info">
+                        <span class="o_stat_value text-danger">
+                            <field name="contracts_count"/>
+                        </span>
+                        <span class="o_stat_text text-danger">
+                            Agreement
+                        </span>
+                    </div>
+                </button>
+
+            </xpath>
+
+
+            <!--            <xpath expr="//span[@class='o_stat_text text-danger']" position="replace">-->
+            <!--                <span class="o_stat_text text-danger" attrs="{'invisible' : [('contract_warning', '=', False)]}" title="In Agreement Since">-->
+            <!--                                    In Agreement Since-->
+            <!--                                </span>-->
+            <!--        </xpath>-->
+            <!--            <xpath expr="//span[@class='o_stat_text text-success']" position="replace">-->
+            <!--                <span class="o_stat_text text-success" attrs="{'invisible' : [('contract_warning', '=', True)]}" title="In Agreement Since"> In Agreement Since</span>-->
+            <!--        </xpath>-->
+
+            <!--            <xpath expr="//div[@class='o_stat_info']" position="replace">-->
+            <!--                <div attrs="{'invisible' : [('first_contract_date', '!=', False)]}" class="o_stat_info">-->
+            <!--                                <span class="o_stat_value text-danger">-->
+            <!--                                   <field name="contracts_count"/>-->
+            <!--                                </span>-->
+            <!--                                <span class="o_stat_text text-danger">-->
+            <!--                                    Agreement-->
+            <!--                                </span>-->
+            <!--                            </div>-->
+            <!--            </xpath>-->
+
+
+            <xpath expr="//field[@name='country_of_birth']" position="after">
+                <field name="blood_group"/>
+            </xpath>
+            <!--            <xpath expr="//field[@name='company_id']" position="after">-->
+            <!--                <field name="grade"/>-->
+            <!--            </xpath>-->
+
+            <xpath expr="//field[@name='children']" position="before">
+
+                <field name="depend_ids">
+                    <tree editable="bottom">
+                        <field name="name"/>
+                        <field name="relation"/>
+                    </tree>
+                </field>
+
+            </xpath>
+
+        </field>
+    </record>
+
+
+</odoo>
+

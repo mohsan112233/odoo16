@@ -1,0 +1,25 @@
+<odoo>
+    <record id="hr_employee_advance_salary_view_form_inherit" model="ir.ui.view">
+      <field name="name">loan.template.inherit</field>
+      <field name="model">hr.advance.salary</field>
+
+      <field name="inherit_id" ref="sync_employee_advance_salary.hr_employee_advance_salary_view_form" />
+      <field name="arch" type="xml">
+      <notebook>
+
+            <page string="Payslip">
+                            <field name="payslip_loan_ids">
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="amount" />
+                                    <field name="state" />
+                                </tree>
+                            </field>
+                        </page>
+            </notebook>
+        </field>
+
+
+
+  </record>
+</odoo>

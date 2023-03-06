@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="api_view_attendance_tree" model="ir.ui.view">
+            <field name="name">api.view.attendance.tree</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+            <field name="arch" type="xml">
+                <field name="worked_hours" position="after">
+                    <field name="my_new_checkin" invisible="1"/>
+
+
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

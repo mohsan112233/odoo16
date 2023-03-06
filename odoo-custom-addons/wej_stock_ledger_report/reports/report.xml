@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_stock_ledger_report" model="report.paperformat">
+        <field name="name">Stock Ledger Report A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">40</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">36</field>
+        <field name="dpi">110</field>
+    </record>
+    <report id="action_report_stock_report"
+            string="Stock Report With Price"
+            model="product.product"
+            report_type="qweb-pdf"
+            paperformat="wej_stock_ledger_report.paperformat_stock_ledger_report"
+            name="wej_stock_ledger_report.report_stock_ledger"
+            file="wej_stock_ledger_report.report_stock_ledger"
+            menu="False"/>
+    <report id="action_report_stock_report2"
+            string="Stock Report Without Price"
+            model="product.product"
+            report_type="qweb-pdf"
+            paperformat="wej_stock_ledger_report.paperformat_stock_ledger_report"
+            name="wej_stock_ledger_report.report_stock_ledger2"
+            file="wej_stock_ledger_report.report_stock_ledger2"
+            menu="False"/>
+
+</odoo>

@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="portal_my_home_menu_attendance" name="Portal layout : Attendance menu entry"
+                  inherit_id="portal.portal_breadcrumbs" priority="25">
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+                <li t-if="page_name == 'advances' or advances"
+                    t-attf-class="breadcrumb-item #{'active ' if not leave else ''}">
+                    <a t-if="advances" t-attf-href="/advance/requests/form?{{ keep_query() }}">
+                        Advances
+                    </a>
+                </li>
+            </xpath>
+        </template>
+
+        <template id="portal_my_home_contract" name="Portal My Home : contract entries"
+                  inherit_id="portal.portal_my_home" priority="30">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">Advance Request</t>
+                    <t t-set="url" t-value="'/advance/requests/form'"/>
+                    <t t-set="count" t-value="advance_count"/>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="advance_request_form">
+            <t t-call="portal.portal_layout">
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Advance Request Form</t>
+                    <div class="form-inline ml-lg-4" >
+                        <a class="btn btn-success btn-sm" href="/advance/requests/form">
+                            <i class="fa fa-arrow-left"/>
+                            Back
+                        </a>
+                    </div>
+                </t>
+                <div class="oe_structure">
+                    <div class="container">
+                        <form role="form" action="/create/advance-request/" method="POST">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="form-group">
+                                <label for="request_amount">Request Amount</label>
+                                <input type="text" class="form-control request_amount" name="request_amount"
+                                       id="request_amount" placeholder="Request Amount"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="radio" id="fully" name="payment" value="fully">
+                                    <label for="fully">Advance Salary</label>
+                                    <br>
+                                    </br>
+                                </input>
+                                <input type="radio" id="partially" name="payment" value="partially">
+                                    <label for="partially">Loan</label>
+                                    <br>
+                                    </br>
+                                </input>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label" for="payment_start_date">Start Date</label>
+                                    <div class="input-group date">
+                                        <input type="datetime-local" name="payment_start_date"
+                                               class="form-control start_date payment_start_date"
+                                               data-date-format="YYYY-MM-DD"
+                                               placeholder="YYYY-MM-DD"/>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <span class="fa fa-calendar" role="img"
+                                                      aria-label="Calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reason">Request Reason</label>
+                                <input type="text" class="form-control reason" name="reason" id="reason"
+                                       placeholder="Reason"/>
+                            </div>
+                            <div class="clearfix oe_login_buttons">
+                                <button type="submit" class="btn btn-success">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="advances_form" name="Advance Request">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Advance Details</t>
+                    <div class="form-inline ml-lg-4">
+                        <a class="btn btn-success btn-sm" href="/advance-request">
+                            <i class="fa fa-plus-circle"/>
+                            Create New Advance Request
+                        </a>
+                    </div>
+<!--                    <div class="clearfix form-inline ml-lg-4">-->
+<!--                        <a class="btn btn-success btn-sm" href="/skip/requests/form">-->
+<!--                            <i class="fa fa-list-alt"/>-->
+<!--                            Skip Installment-->
+<!--                        </a>-->
+<!--                    </div>-->
+                </t>
+                <!-- Create New Advance Form-->
+<!--                <div class="modal fade modal_new_advance" role="form">-->
+<!--                    <div class="modal-dialog">-->
+<!--                        <form method="POST" class="modal-content js_website_submit_form new_advance_form">-->
+<!--                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>-->
+<!--                            <header class="modal-header">-->
+<!--                                <h4 class="modal-title">New Advance Request</h4>-->
+<!--                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                                    &amp;times;-->
+<!--                                </button>-->
+<!--                            </header>-->
+<!--                            <main class="modal-body" id="new-opp-dialog">-->
+<!--                                <div class="form-group">-->
+<!--                                    <label for="request_amount">Request Amount</label>-->
+<!--                                    <input type="text" class="form-control request_amount" name="request_amount"-->
+<!--                                           id="request_amount" placeholder="Request Amount"/>-->
+<!--                                </div>-->
+<!--                                <div class="form-group">-->
+<!--                                    <input type="radio" id="fully" name="payment" value="fully">-->
+<!--                                        <label for="fully">Advance Salary</label>-->
+<!--                                        <br>-->
+<!--                                        </br>-->
+<!--                                    </input>-->
+<!--                                    <input type="radio" id="partially" name="payment" value="partially">-->
+<!--                                        <label for="partially">Loan</label>-->
+<!--                                        <br>-->
+<!--                                        </br>-->
+<!--                                    </input>-->
+
+<!--                                </div>-->
+<!--                                &lt;!&ndash;                                <div class="form-group">&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <label for="payment">Request Payment Type:</label>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <br/>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <input type="radio" id="partially" value="partially"/>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <label for="partially">Loan</label>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <br/>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <input type="radio" id="fully" value="fully"/>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <label for="fully">Advance Salary</label>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                    <br/>&ndash;&gt;-->
+<!--                                &lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--                                <div class="row">-->
+<!--                                    <div class="form-group col-md-6">-->
+<!--                                        <label class="control-label" for="payment_start_date">Start Date</label>-->
+<!--                                        <div class="input-group date">-->
+<!--                                            <input type="datetime-local" name="payment_start_date"-->
+<!--                                                   class="form-control start_date payment_start_date"-->
+<!--                                                   data-date-format="YYYY-MM-DD"-->
+<!--                                                   placeholder="YYYY-MM-DD"/>-->
+<!--                                            <div class="input-group-append">-->
+<!--                                                <span class="input-group-text">-->
+<!--                                                    <span class="fa fa-calendar" role="img"-->
+<!--                                                          aria-label="Calendar"></span>-->
+<!--                                                </span>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="form-group">-->
+<!--                                    <label for="reason">Request Reason</label>-->
+<!--                                    <input type="text" class="form-control reason" name="reason" id="reason"-->
+<!--                                           placeholder="Reason"/>-->
+<!--                                </div>-->
+<!--                            </main>-->
+<!--                            <footer class="modal-footer">-->
+<!--                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>-->
+<!--                                <button t-attf-class="btn btn-primary new_advance_confirm">Confirm</button>-->
+<!--                            </footer>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <t t-if="not advances">
+                    <p>There are currently no detail for your requests.</p>
+                </t>
+                <t t-if="advances" t-call="portal.portal_table">
+                    <thead>
+                        <tr class="active">
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Request Amount</th>
+                            <th>Amount To Pay</th>
+                            <th>Start Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <t t-foreach="advances" t-as="advance">
+                        <tr>
+                            <td>
+                                <a t-attf-href="/advance/requests/form/#{advance.id}">
+                                    <span t-field="advance.employee_id.name"/>
+                                </a>
+                            </td>
+                            <td>
+                                <span t-field="advance.department_id.name"/>
+                            </td>
+                            <td>
+                                <span t-field="advance.request_amount"/>
+                            </td>
+                            <td>
+                                <span t-field="advance.amount_to_pay"/>
+                            </td>
+                            <td>
+                                <span t-field="advance.payment_start_date"/>
+                            </td>
+                            <td>
+                                <span t-att-class="'badge badge-info' if advance.state=='confirm' else ''
+                                                       'badge badge-primary' if advance.state=='approve1' else ''
+                                                       'badge badge-danger' if advance.state=='refuse' else ''
+                                                       'badge badge-warning' if advance.state=='draft' else ''
+                                                       'badge badge-success' if advance.state=='paid' else ''
+                                                       " t-field="advance.state"/>
+                            </td>
+                        </tr>
+                    </t>
+                </t>
+            </t>
+        </template>
+        <!-- advance view on click -->
+        <template id="portal_advance_form" name="Advance Portal Template">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Advance Request</t>
+                    <div class="clearfix form-inline ml-lg-4">
+                        <a class="btn btn-success btn-sm" href="/advance/requests/form">
+                            <i class="fa fa-arrow-left"/>
+                            Back
+                        </a>
+                    </div>
+                </t>
+                <div class="oe_structure">
+                    <div class="container">
+                        <br/>
+                        <center>
+                            <h3>Advance Request</h3>
+                        </center>
+                        <br/>
+                        <div class="border-bottom d-flex justify-content-between py-2 mb-3 align-items-center">
+                            <h5 class="mb-0">
+                                <span class="text-nowrap"/>
+                            </h5>
+
+                        </div>
+                        <br/>
+                        <button t-if="advance_rec.state == 'draft'"
+                                type="button" data-toggle="modal"
+                                data-target=".modal_edit_advance"
+                                class="btn btn-link btn-sm"><i class="fa fa-pencil mr-1"/>Edit
+                        </button>
+                        <div>
+                            <div>
+                                <strong>Name:</strong>
+                                <h3><b><span t-field="advance_rec.employee_id.name"/></b></h3>
+                                <br/>
+                            </div>
+
+                            <strong>Department:</strong>
+                            <span t-field="advance_rec.department_id.name"/>
+                            <br/>
+                            <strong>Amount Type:</strong>
+                            <span t-field="advance_rec.payment"/>
+                            <br/>
+
+                            <strong>Request Amount:</strong>
+                            <span t-field="advance_rec.request_amount"/>
+                            <br/>
+                            <strong>Amount To Pay:</strong>
+                            <span t-field="advance_rec.amount_to_pay"/>
+                            <br/>
+                            <strong>Start Date:</strong>
+                            <span t-field="advance_rec.payment_start_date"/>
+                            <br/>
+                            <strong>Reason:</strong>
+                            <span t-field="advance_rec.reason"/>
+                            <br/>
+                            <strong>State:</strong>
+                            <span t-att-class="'badge badge-success' if advance_rec.state=='approve2' else ''
+                                                       'badge badge-info' if advance_rec.state=='approve1' else ''
+                                                       'badge badge-danger' if advance_rec.state=='refuse' else ''
+                                                       'badge badge-warning' if advance_rec.state=='draft' else ''
+                                                       'badge badge-dark' if advance_rec.state=='paid' else ''
+                                                       'badge badge-secondary' if advance_rec.state=='confirm' else ''
+                                                       'badge badge-primary' if advance_rec.state=='done' else ''"
+                                  t-field="advance_rec.state"/>
+<!--                            <span class="badge badge-primary">Primary</span>-->
+<!--<span class="badge badge-secondary">Secondary</span>-->
+<!--<span class="badge badge-success">Success</span>-->
+<!--<span class="badge badge-danger">Danger</span>-->
+<!--<span class="badge badge-warning">Warning</span>-->
+<!--<span class="badge badge-info">Info</span>-->
+<!--<span class="badge badge-light">Light</span>-->
+<!--<span class="badge badge-dark">Dark</span>-->
+
+                        </div>
+                        <table>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+                        <br/>
+                    </div>
+                    <div>
+                        <div role="dialog" class="modal fade modal_edit_advance">
+                            <div class="modal-dialog">
+                                <form method="POST"
+                                      class="js_accept_json modal-content js_website_submit_form edit_advance_form">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="advance_id" class="advance_id"
+                                           t-att-value="advance_rec.id"/>
+                                    <header class="modal-header">
+                                        <h4 class="modal-title">Edit Request</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            &amp;times;
+                                        </button>
+                                    </header>
+                                    <main class="modal-body" id="sign-dialog">
+                                        <div class="form-group">
+                                            <label for="request_amount">Request Amount</label>
+                                            <input type="text" class="form-control request_amount" name="request_amount"
+                                                   t-att-value="advance_rec.request_amount" id="request_amount" placeholder="Request Amount"/>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label" for="start_date" style="color:red;">
+                                                    Actual Start Date
+                                                </label>
+                                                <span t-field="advance_rec.payment_start_date" style="color:green;"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label" for="start_date">Start Date</label>
+                                                <div class="input-group date">
+                                                    <input type="datetime-local" name="payment_start_date"
+                                                           class="form-control start_date payment_start_date"
+                                                           placeholder="YYYY-MM-DD"/>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <span class="fa fa-calendar" role="img"
+                                                                  aria-label="Calendar"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </main>
+                                    <footer class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                            Cancel
+                                        </button>
+                                        <button t-attf-class="btn btn-primary edit_advance_confirm">Confirm</button>
+                                    </footer>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+        </template>
+
+        <record id="advance_request_web_form_message" model="website.page">
+            <field name="name">Advance Request Saved</field>
+            <field name="type">qweb</field>
+            <field name="url">/advance-request-saved</field>
+            <field name="is_published">True</field>
+            <field name="key">sg_advance_request_portal.advance_request_web_form_message</field>
+            <field name="arch" type="xml">
+                <t name="Saved" t-name="sg_advance_request_portal.advance_request_web_form_message">
+                    <t t-call="portal.portal_layout">
+                        <t t-call="portal.portal_searchbar">
+                            <t t-set="title">Saved Advance Request</t>
+                            <div class="clearfix form-inline ml-lg-4">
+                                <a class="btn btn-success btn-sm" href="/advance/requests/form">
+                                    <i class="fa fa-arrow-left"/>
+                                    Back
+                                </a>
+                            </div>
+                        </t>
+                        <div id="wrap">
+                            <div class="container o_kanban_card_content">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="alert alert-success" role="alert">
+                                            Your data has been saved successfully.
+                                        </div>
+                                        <p>
+                                            We will get back to you shortly.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </field>
+        </record>
+    </data>
+</odoo>
