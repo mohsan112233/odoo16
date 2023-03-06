@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="sale_assortment_form">
+            <field name="name">sale_assortment_form</field>
+            <field name="model">sale.assortment</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group class="col-6">
+                        <field name="product_id"/>
+
+                        <field name="color_ids" class="text-break flex-wrap" options="{'horizontal': true}" widget="radio" required="1"/>
+
+                        <field name="assortment_ids" invisible="1"  widget="radio" required="1"/>
+                        <field name="template_id" required="1" class="text-break flex-wrap"
+
+                            widget="radio" options="{'horizontal': true}"
+                        />
+                        <field name="total_qty" required="1"/>
+                    </group>
+
+
+                                        <field name="temp_autocomplete_lines" invisible="1"/>
+<!--                       <group attrs="{'invisible': [('temp_autocomplete_lines', '=', [])]}">-->
+<!--                        <field name="template_id" class="text-break flex-wrap"-->
+
+<!--                            widget="radio" options="{'horizontal': true}"-->
+<!--                        />-->
+
+<!--                    </group>-->
+
+                    <footer>
+                        <button name="assign_ratio" string="Confirm" type="object" class="btn-primary"/>
+                        <button string="Close" class="btn-danger" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_assortment_form">
+            <field name="name">sale_assortment_form</field>
+            <field name="model">purchase.assortment</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group class="col-6">
+                        <field name="product_id"/>
+
+                        <field name="color_ids" class="text-break flex-wrap" options="{'horizontal': true}" widget="radio" required="1"/>
+
+                        <field name="assortment_ids" invisible="1"  widget="radio" required="1"/>
+                        <field name="template_id" required="1" class="text-break flex-wrap"
+
+                            widget="radio" options="{'horizontal': true}"
+                        />
+                        <field name="total_qty" required="1"/>
+                    </group>
+
+
+                                        <field name="temp_autocomplete_lines" invisible="1"/>
+<!--                       <group attrs="{'invisible': [('temp_autocomplete_lines', '=', [])]}">-->
+<!--                        <field name="template_id" class="text-break flex-wrap"-->
+
+<!--                            widget="radio" options="{'horizontal': true}"-->
+<!--                        />-->
+
+<!--                    </group>-->
+                    <footer>
+                        <button name="purchase_assign_ratio" string="Confirm" type="object" class="btn-primary"/>
+                        <button string="Close" class="btn-danger" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="grn_assortment_form">
+            <field name="name">sale_assortment_form</field>
+            <field name="model">grn.assortment</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group class="col-6">
+                        <field name="product_id"/>
+
+                        <field name="color_ids" class="text-break flex-wrap" options="{'horizontal': true}" widget="radio" required="1"/>
+
+                        <field name="assortment_ids" invisible="1"  widget="radio" required="1"/>
+                        <field name="template_id" required="1" class="text-break flex-wrap"
+
+                            widget="radio" options="{'horizontal': true}"
+                        />
+                        <field name="total_qty" required="1"/>
+                    </group>
+
+
+                                        <field name="temp_autocomplete_lines" invisible="1"/>
+<!--                       <group attrs="{'invisible': [('temp_autocomplete_lines', '=', [])]}">-->
+<!--                        <field name="template_id" class="text-break flex-wrap"-->
+
+<!--                            widget="radio" options="{'horizontal': true}"-->
+<!--                        />-->
+
+<!--                    </group>-->
+                    <footer>
+                        <button name="purchase_assign_ratio" string="Confirm" type="object" class="btn-primary"/>
+                        <button string="Close" class="btn-danger" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+          <record model="ir.actions.act_window" id="grn_assort_action_window">
+            <field name="name">GRN Assortment</field>
+            <field name="res_model">grn.assortment</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="sale_assort_action_window">
+            <field name="name">Sale Assortment</field>
+            <field name="res_model">sale.assortment</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="purchase_assort_action_window">
+            <field name="name">Purchase Assortment</field>
+            <field name="res_model">purchase.assortment</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!--        <menuitem id="student_course_assign_group"-->
+        <!--                  name="Assign Group"-->
+        <!--                  parent="odoocms_registration.menu_odoocms_registration_classes"-->
+        <!--                  action="student_group_action_window"-->
+        <!--                  groups="odoocms.group_cms_manager"-->
+        <!--                  sequence="171"/>-->
+
+        <record id="sale_inherit" model="ir.ui.view">
+            <field name="name">sale.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']"
+                       position="before">
+                    <button name="%(sale_assort_action_window)d" string="Add Assortment" class="btn-primary"
+                            type="action"></button>
+
+                </xpath>
+            </field>
+        </record>
+
+        <record id="purchase_inherit" model="ir.ui.view">
+            <field name="name">purchase.order</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']"
+                       position="before">
+                    <button name="%(purchase_assort_action_window)d" string="Add Assortment" class="btn-primary"
+                            type="action"></button>
+
+                </xpath>
+            </field>
+        </record>
+
+        <record id="grn_inherit" model="ir.ui.view">
+            <field name="name">stock.picking</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='move_ids_without_package']"
+                       position="before">
+                    <button name="%(grn_assort_action_window)d" string="Add Assortment" class="btn-primary"
+                            type="action"></button>
+
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

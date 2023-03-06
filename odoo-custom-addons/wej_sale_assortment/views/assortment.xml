@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="assort_template_view_form" model="ir.ui.view">
+            <field name="name">Assortment Template</field>
+            <field name="model">assortment.template</field>
+            <field name="arch" type="xml">
+                <form string="Tags">
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+                        <group>
+                            <field name="name"/>
+                            <field name="active" invisible="1"/>
+<!--                            <field name="product_id"/>-->
+                        </group>
+
+                        <field name="line_ids" nolabel="1">
+                            <tree string="Variants" editable="bottom" delete="1">
+                                <field name="product_line_id"/>
+                                <field name="product_line_ids" widget="many2many_tags" invisible="1"/>
+                                <field name="ratio" required="0"/>
+                            </tree>
+                        </field>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="assort_temp_view_tree" model="ir.ui.view">
+            <field name="name">Assortment Template</field>
+            <field name="model">assortment.template</field>
+            <field name="arch" type="xml">
+                <tree string="Tags">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="create_uid"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_assortment" model="ir.actions.act_window">
+            <field name="name">Assortment Template</field>
+            <field name="res_model">assortment.template</field>
+            <field name="view_id" ref="assort_temp_view_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="product_tem" model="ir.ui.view">
+        <field name="name">Assortment</field>
+        <field name="model">product.template</field>
+
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_tooltip']" position="after">
+                <field name="assortment_ids" widget="many2many_tags" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+        <menuitem id="menu_assortment_line_form_action"
+                  action="action_assortment"
+                  parent="stock.menu_stock_root"
+                  sequence="13"/>
+
+    </data>
+</odoo>

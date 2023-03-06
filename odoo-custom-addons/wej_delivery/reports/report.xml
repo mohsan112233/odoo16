@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_delivery" model="report.paperformat">
+        <field name="name">Delivery Report A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">52</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">48</field>
+        <field name="dpi">110</field>
+    </record>
+
+
+    <record id="action_report_delivery" model="ir.actions.report">
+        <field name="name">DELIVERY REPORT</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="paperformat_id" ref="wej_delivery.paperformat_delivery"/>
+        <field name="report_name">wej_delivery.report_delivery_document</field>
+        <field name="report_file">wej_delivery.report_delivery_document</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+
+</odoo>

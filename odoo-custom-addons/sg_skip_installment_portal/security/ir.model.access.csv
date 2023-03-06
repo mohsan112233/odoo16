@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_employee_public_user,hr.employee_public,hr.model_hr_employee_public,base.group_portal,1,1,1,0
+access_skip_installment_employee,access_skip_installment_employee,model_hr_skip_installment,base.group_portal,1,1,1,0
+

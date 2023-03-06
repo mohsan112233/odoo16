@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_sale_invoice" model="report.paperformat">
+        <field name="name">Sale Invoice A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">70</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">63</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="paperformat_unregistered_sale_invoice" model="report.paperformat">
+        <field name="name">Sale Invoice A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">70</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">63</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="paperformat_sale_tax_invoice" model="report.paperformat">
+        <field name="name">Sale Tax Invoice A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">75</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">70</field>
+        <field name="dpi">110</field>
+    </record>
+
+<!--    <record id="action_report_sale_invoice" model="ir.actions.report">-->
+<!--        <field name="name">SALE INVOICE</field>-->
+<!--        <field name="model">account.move</field>-->
+<!--        <field name="report_type">qweb-pdf</field>-->
+<!--        <field name="paperformat_id" ref="wej_sale_invoices.paperformat_sale_invoice"/>-->
+<!--        <field name="report_name">wej_sale_invoices.report_untax_document</field>-->
+<!--        <field name="report_file">wej_sale_invoices.report_untax_document</field>-->
+<!--        <field name="binding_model_id" eval="False"/>-->
+<!--        <field name="binding_type">report</field>-->
+<!--    </record>-->
+    <record id="action_report_sale_invoice_tax" model="ir.actions.report">
+        <field name="name">SALES TAX INVOICE</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="paperformat_id" ref="wej_sale_invoices.paperformat_sale_tax_invoice"/>
+        <field name="report_name">wej_sale_invoices.report_tax_document</field>
+        <field name="report_file">wej_sale_invoices.report_tax_document</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <report id="action_report_unregistered_invoice_tax"
+            string="UNREGISTERED INVOICE"
+            model="account.move"
+            report_type="qweb-pdf"
+            paperformat="wej_sale_invoices.paperformat_unregistered_sale_invoice"
+            name="wej_sale_invoices.report_unregistered_document"
+            file="wej_sale_invoices.report_unregistered_document"
+            menu="False"/>
+
+
+</odoo>

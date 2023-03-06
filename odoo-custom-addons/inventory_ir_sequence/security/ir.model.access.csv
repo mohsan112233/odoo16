@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_season_master,season_master,model_season_master,,1,1,1,1
+access_origin_master,origin.master,model_origin_master,,1,1,1,1
+access_type_master,type.master,model_type_master,,1,1,1,1
+access_market_master,market.master,model_market_master,,1,1,1,1
+access_brands_master,brands.master,model_brands_master,,1,1,1,1
+access_make_master,make.master,model_make_master,,1,1,1,1
+access_artical_market_code_master,artical.market.code.master,model_artical_market_code_master,,1,1,1,1

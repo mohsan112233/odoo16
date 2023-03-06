@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_assortment,sale.assortment,model_sale_assortment,,1,1,1,1
+access_purchase_assortment,purchase.assortment,model_purchase_assortment,,1,1,1,1
+access_grn_assortment,grn.assortment,model_grn_assortment,,1,1,1,1
+access_sale_assortment_line,sale.assortment.line,model_sale_assortment_line,,1,1,1,1
+access_assortment_template,assortment.template,model_assortment_template,,1,1,1,1
+access_assortment_template_line,assortment.template.line,model_assortment_template_line,,1,1,1,1
+access_prod_assort_line,prod.assort.line,model_prod_assort_line,,1,1,1,1
