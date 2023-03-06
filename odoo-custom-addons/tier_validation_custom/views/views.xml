@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="tier_view_form" model="ir.ui.view">
+            <field name="name">Tier Validation</field>
+            <field name="model">tier.validation.custom</field>
+            <field name="arch" type="xml">
+                <form string="Tags">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="model_cus"/>
+                                <field name="field_cus"/>
+                                <field name="operator"/>
+                                <field name="condition"/>
+                            </group>
+                            <group>
+                                <field string="Approved Users" name="validate_users" widget="many2many_tags"
+                                       options="{'no_create':True}"/>
+                                <field string="Restricted Users" name="non_validate_users" widget="many2many_tags"
+                                       options="{'no_create':True}"/>
+                            </group>
+                        </group>
+                        <field name="note" required="1"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="tire_view_tree" model="ir.ui.view">
+            <field name="name">Tier Validation</field>
+            <field name="model">tier.validation.custom</field>
+            <field name="arch" type="xml">
+                <tree string="Tags">
+                    <field name="model_cus"/>
+                    <field name="field_cus"/>
+                    <field name="operator"/>
+                    <field name="condition"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_tier" model="ir.actions.act_window">
+            <field name="name">Tier Validation</field>
+            <field name="res_model">tier.validation.custom</field>
+            <field name="view_id" ref="tire_view_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem id="tier_form_action"
+                  action="action_tier"
+                  parent="stock.menu_stock_root"
+                  sequence="13"/>
+<!--        <record id="mail_act_approval_request" model="mail.activity.type">-->
+<!--            <field name="name">Approval Request</field>-->
+<!--            <field name="summary">Please validate this order.</field>-->
+<!--            <field name="category">default</field>-->
+<!--            <field name="res_model">purchase.order</field>-->
+<!--        </record>-->
+
+
+    </data>
+<!--    <data noupdate="1">-->
+<!--        &lt;!&ndash; Leave specific activities &ndash;&gt;-->
+<!--        <record id="main_act_approval_request" model="mail.activity.type">-->
+<!--            <field name="name">Approval Request</field>-->
+<!--            <field name="icon"></field>-->
+<!--            <field name="res_model_id" ref="tier_validation_custom.model_attendance_adjustment"/>-->
+<!--        </record>-->
+<!--    </data>-->
+</odoo>

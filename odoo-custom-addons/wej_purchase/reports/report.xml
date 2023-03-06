@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report id="action_purchase_order_unregistered"
+            string="Unregistered Purchase Order"
+            model="purchase.order"
+            report_type="qweb-pdf"
+            name="wej_purchase.report_purchaseorder_unregistered"
+            file="wej_purchase.report_purchaseorder_unregistered"/>
+
+</odoo>

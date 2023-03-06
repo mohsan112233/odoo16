@@ -1,0 +1,34 @@
+<odoo>
+    <record id="kaytas_advance_salrry" model="ir.ui.view">
+        <field name="name">hr.advance.salary.inherit</field>
+        <field name="model">hr.advance.salary</field>
+        <field name="inherit_id" ref="sync_employee_advance_salary.hr_employee_advance_salary_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_approve1']" position="replace">
+                <button name="action_approve1" type="object" states="confirm" string="Approve" class="btn-primary"
+                        groups="sync_employee_advance_salary.kaytex_approver_group_first"/>
+
+            </xpath>
+            <xpath expr="//button[@name='action_approve2']" position="replace">
+                <button name="action_approve2" type="object" states="approve1" string="Approve" class="btn-primary"
+                        groups="sync_employee_advance_salary.kaytex_approver_group_second"/>
+
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="onchange_full_pay" string="Combine Remaining Instalments" type="object" states='paid'/>
+                <button name="set_draft" string="Draft" type="object" states='paid'/>
+            </xpath>
+
+            <xpath expr="//field[@name='request_amount']" position="before">
+                <field name="max_loan" force_save="1" attrs="{'invisible': [('loan_group', '!=', True)]}" ></field>
+                <field name="loan_group" invisible="1"></field>
+            </xpath>
+            <xpath expr="//field[@name='amount_to_pay']" position="after">
+                <field name="full_pay" force_save="1" attrs="{'invisible': [('state', '!=', 'paid')]}"></field>
+            </xpath>
+
+
+        </field>
+    </record>
+</odoo>

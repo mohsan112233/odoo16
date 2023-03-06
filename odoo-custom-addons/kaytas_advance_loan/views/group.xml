@@ -1,0 +1,15 @@
+<odoo>
+
+
+     <record id="kaytex_approver_group_first" model="res.groups">
+        <field name="name">Loan First Approval</field>
+         <field name="category_id" ref="base.module_category_human_resources_employees"/>
+    </record>
+
+    <record id="kaytex_approver_group_second" model="res.groups">
+        <field name="name">Loan Second Approval</field>
+        <field name="category_id" ref="base.module_category_human_resources_employees"/>
+     </record>
+
+
+</odoo>

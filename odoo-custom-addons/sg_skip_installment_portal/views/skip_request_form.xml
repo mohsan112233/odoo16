@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+         <template id="portal_my_home_menu_skip" name="Portal layout : Skip menu entry"
+                  inherit_id="portal.portal_breadcrumbs" priority="25">
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+                <li t-if="page_name == 'skips' or skips"
+                    t-attf-class="breadcrumb-item #{'active ' if not leave else ''}">
+                    <a t-if="skips" t-attf-href="/skip/requests/form?{{ keep_query() }}">
+                        Skip Installment Requests
+                    </a>
+                </li>
+            </xpath>
+        </template>
+
+        <template id="portal_my_home_contract" name="Portal My Home : contract entries"
+                  inherit_id="portal.portal_my_home" priority="30">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">Skip Installment Request</t>
+                    <t t-set="url" t-value="'/skip/requests/form'"/>
+                    <t t-set="count" t-value="skip_request_count"/>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="skip_installment_form">
+            <t t-call="portal.portal_layout">
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Skip Installment Form</t>
+                    <div class="form-inline ml-lg-4"  >
+                        <a class="btn btn-success btn-sm" href="/skip/requests/form">
+                            <i class="fa fa-arrow-left"/>
+                            Back
+                        </a>
+                    </div>
+                </t>
+                <div class="oe_structure">
+                    <div class="container">
+                        <form role="form" action="/create/skip-request/" method="POST">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="form-group">
+                                <label for="advance_salary_id">My Advance/Loan</label>
+                                <select name="advance_salary_id"
+                                        class="form-control advance_my_select advance_salary_id" required="True">
+                                    <t t-foreach="skip_installment" t-as="installment">
+                                        <option t-att-value="installment.id">
+                                            <t t-esc="installment.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label" for="start_date">Start Date</label>
+                                    <div class="input-group date">
+                                        <input type="date" name="date"
+                                               class="form-control date start_date"
+                                               data-date-format="YYYY-MM-DD"
+                                               placeholder="YYYY-MM-DD"/>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <span class="fa fa-calendar" role="img"
+                                                      aria-label="Calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Request Reason</label>
+                                <input type="text" class="form-control name" name="name" id="name"
+                                       placeholder="Reason"/>
+                            </div>
+                            <div class="clearfix oe_login_buttons">
+                                <button type="submit" class="btn btn-success">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="skip_form" name="Skip Request">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Skip Installments Details</t>
+                    <div class="form-inline ml-lg-4">
+                        <a class="btn btn-success btn-sm" href="/skip-request">
+                            <i class="fa fa-plus"/>
+                            Create New Skip Request
+                        </a>
+                    </div>
+                </t>
+                <!-- Create New Skip Request-->
+<!--                <div class="modal fade modal_new_skip" role="form">-->
+<!--                    <div class="modal-dialog">-->
+<!--                        <form method="POST" class="modal-content js_website_submit_form new_skip_form">-->
+<!--                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>-->
+<!--                            <header class="modal-header">-->
+<!--                                <h4 class="modal-title">New Skip Installment Request</h4>-->
+<!--                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                                    &amp;times;-->
+<!--                                </button>-->
+<!--                            </header>-->
+<!--                            <main class="modal-body" id="new-opp-dialog">-->
+<!--&lt;!&ndash;                                <div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <label class="control-label" for="advance_salary_id">Advance Type</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <input type="option" name="advance_salary_id" class="form-control advance_salary_id"  id="advance_salary_id"&ndash;&gt;-->
+<!--&lt;!&ndash;                                           />&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--                                 <div class="form-group">-->
+<!--                                <label for="advance_salary_id">My Advance/Loan</label>-->
+<!--                                <select name="advance_salary_id" class="form-control advance_my_select advance_salary_id" required="True">-->
+<!--                                    <t t-foreach="skip_installment or []" t-as="installment">-->
+<!--                                        <option t-att-value="installment[0]">-->
+<!--                                            <t t-esc="installment[1]" />-->
+<!--                                        </option>-->
+<!--                                    </t>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                                &lt;!&ndash; This advance type field still remain for development&ndash;&gt;-->
+<!--                                <div class="row">-->
+<!--                                    <div class="form-group col-md-6">-->
+<!--                                        <label class="control-label" for="start_date">Start Date</label>-->
+<!--                                        <div class="input-group date">-->
+<!--                                            <input type="datetime-local" name="date"-->
+<!--                                                   class="form-control date start_date"-->
+<!--                                                   data-date-format="YYYY-MM-DD"-->
+<!--                                                   placeholder="YYYY-MM-DD"/>-->
+<!--                                            <div class="input-group-append">-->
+<!--                                                <span class="input-group-text">-->
+<!--                                                    <span class="fa fa-calendar" role="img"-->
+<!--                                                          aria-label="Calendar"></span>-->
+<!--                                                </span>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="form-group">-->
+<!--                                    <label for="name">Request Reason</label>-->
+<!--                                    <input type="text" class="form-control name" name="name" id="name"-->
+<!--                                           placeholder="Reason"/>-->
+<!--                                </div>-->
+<!--                            </main>-->
+<!--                            <footer class="modal-footer">-->
+<!--                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>-->
+<!--                                <button t-attf-class="btn btn-primary new_skip_confirm">Confirm</button>-->
+<!--                            </footer>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <t t-if="not skips">
+                    <p>There are currently no detail for your requests.</p>
+                </t>
+                <t t-if="skips" t-call="portal.portal_table">
+                    <thead>
+                        <tr class="active">
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+<!--                            <th>Responsible Approver</th>-->
+                        </tr>
+                    </thead>
+
+                    <t t-foreach="skips" t-as="skips">
+                        <tr>
+                            <td>
+                                <a t-attf-href="/skip/requests/form/#{skips.id}?{{keep_query()}}">
+                                    <span t-field="skips.employee_id.name"/>
+                                </a>
+                            </td>
+                            <td>
+                                <span t-field="skips.date"/>
+                            </td>
+                            <td>
+                                <span t-field="skips.name"/>
+                            </td>
+<!--                            <td>-->
+<!--                                <span t-field="skips.responsible_id.name"/>-->
+<!--                            </td>-->
+
+                            <td>
+                                <span t-att-class="'badge badge-success' if skips.state=='confirm' else ''
+                                                       'badge badge-primary' if skips.state=='approve' else ''
+                                                       'badge badge-danger' if skips.state=='refuse' else ''
+                                                       'badge badge-warning' if skips.state=='draft' else ''
+                                                       " t-field="skips.state"/>
+                            </td>
+                        </tr>
+                    </t>
+                </t>
+            </t>
+        </template>
+        <!-- Skip request Detail-->
+        <template id="portal_skip_form" name="Skip Portal Template">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Skip Request</t>
+                    <div class="clearfix form-inline ml-lg-4">
+                        <a class="btn btn-success btn-sm" href="/skip/requests/form">
+                            <i class="fa fa-arrow-left"/>
+                            Back
+                        </a>
+                    </div>
+                </t>
+                <div class="oe_structure">
+                    <div class="container">
+                        <br/>
+                        <center>
+                            <h3>Skip Request</h3>
+                        </center>
+                        <br/>
+                        <div class="border-bottom d-flex justify-content-between py-2 mb-3 align-items-center">
+                            <h5 class="mb-0">
+                                <span class="text-nowrap"/>
+                            </h5>
+
+                        </div>
+                        <br/>
+                        <button t-if="skip_rec.state == 'draft'"
+                                type="button" data-toggle="modal"
+                                data-target=".modal_edit_skip"
+                                class="btn btn-link btn-sm"><i class="fa fa-pencil mr-1"/>Edit
+                        </button>
+                        <div>
+                            <div>
+                                <strong>Name:</strong>
+                                <h3><b><span t-field="skip_rec.employee_id.name"/></b></h3>
+                                <br/>
+                            </div>
+                            <strong>Date:</strong>
+                            <span t-field="skip_rec.date"/>
+                            <br/>
+                            <strong>Reason:</strong>
+                            <span t-field="skip_rec.name"/>
+                            <br/>
+
+<!--                            <strong>Responsible Approver:</strong>-->
+<!--                            <span t-field="skip_rec.responsible_id.name"/>-->
+<!--                            <br/>-->
+
+                            <strong>State:</strong>
+                            <span t-att-class="'badge badge-success' if skip_rec.state=='confirm' else ''
+                                                       'badge badge-info' if skip_rec.state=='approve' else ''
+                                                       'badge badge-danger' if skip_rec.state=='refuse' else ''
+                                                       'badge badge-warning' if skip_rec.state=='draft' else ''
+                                                       " t-field="skip_rec.state"/>
+
+                        </div>
+                    </div>
+                    <!-- Skip Edit View -->
+                    <div>
+                        <div role="dialog" class="modal fade modal_edit_skip">
+                            <div class="modal-dialog">
+                                <form method="POST"
+                                      class="js_accept_json modal-content js_website_submit_form edit_skip_form">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="hidden" name="skip_id" class="skip_id"
+                                           t-att-value="skip_rec.id"/>
+                                    <header class="modal-header">
+                                        <h4 class="modal-title">Edit Request</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            &amp;times;
+                                        </button>
+                                    </header>
+                                    <main class="modal-body" id="sign-dialog">
+                                        <div class="form-group">
+                                            <label class="col-form-label" for="name">Reason</label>
+                                            <input type="name" class="form-control name" name="name"
+                                                   t-att-value="skip_rec.name" placeholder="Reason"/>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label" for="start_skip_date">Date</label>
+                                                <div class="input-group date">
+                                                    <input type="date" name="date"
+                                                           class="form-control date start_skip_date "
+                                                           t-att-value="skip_rec.date"
+                                                           value="2000-01-01T00:00:00" placeholder="YYYY-MM-DD"/>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">
+                                                            <span class="fa fa-calendar" role="img"
+                                                                  aria-label="Calendar"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </main>
+                                    <footer class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                            Cancel
+                                        </button>
+                                        <button t-attf-class="btn btn-primary edit_skip_confirm">Confirm</button>
+                                    </footer>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+        </template>
+
+        <record id="skip_request_web_form_message" model="website.page">
+            <field name="name">Skip Request Saved</field>
+            <field name="type">qweb</field>
+            <field name="url">/skip-request-saved</field>
+            <field name="is_published">True</field>
+            <field name="key">sg_skip_installment_portal.skip_request_web_form_message</field>
+            <field name="arch" type="xml">
+                <t name="Saved" t-name="sg_skip_installment_portal.skip_request_web_form_message">
+                    <t t-call="portal.portal_layout">
+                        <t t-call="portal.portal_searchbar">
+                            <t t-set="title">Saved Skip Installment</t>
+                            <div class="clearfix form-inline ml-lg-4">
+                                <a class="btn btn-success btn-sm" href="/skip/requests/form">
+                                    <i class="fa fa-arrow-left"/>
+                                    Back
+                                </a>
+                            </div>
+                        </t>
+                        <div id="wrap">
+                            <div class="container o_kanban_card_content">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="alert alert-success" role="alert">
+                                            Your data has been saved successfully.
+                                        </div>
+                                        <p>
+                                            We will get back to you shortly.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </field>
+        </record>
+
+    </data>
+</odoo>

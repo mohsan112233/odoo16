@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="plan_view_attendance_tree" model="ir.ui.view">
+        <field name="name">plan.view.attendance.tree</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+             <field name="late_check_in" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+
+<!--            <field name="check_in" position="before">-->
+<!--                <field name="plan_date_only" invisible="0"/>-->
+<!--            </field>-->
+            <field name="check_in" position="before">
+                <field name="planned_time" invisible="0"/>
+            </field>
+            <field name="check_in" position="before">
+                <field name="checkin_date" invisible="0"/>
+            </field>
+<!--            <field name="check_out" position="before">-->
+<!--                <field name="checkout_date" invisible="1"/>-->
+<!--            </field>-->
+            <field name="check_in" position="before">
+                <field name="planned_exit_time" invisible="0"/>
+            </field>
+             <field name="worked_hours" position="before">
+                <field name="late_emp" invisible="0" widget="float_time"/>
+                <field name="assumption_request" invisible="0"/>
+            </field>
+            <field name="worked_hours" position="before">
+                <field name="overtime" widget="float_time" invisible="0"/>
+            </field>
+        </field>
+    </record>
+
+
+</odoo>

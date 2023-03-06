@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    views-->
+    <record id="view_season_tree" model="ir.ui.view">
+        <field name="name">season.master.tree.view</field>
+        <field name="model">season.master</field>
+        <field name="arch" type="xml">
+            <tree string="Season" editable="bottom">
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_origin_master_tree" model="ir.ui.view">
+        <field name="name">origin.master.tree.view</field>
+        <field name="model">origin.master</field>
+        <field name="arch" type="xml">
+            <tree string="Origin" editable="bottom">
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_type_master_tree" model="ir.ui.view">
+        <field name="name">type.master.tree.view</field>
+        <field name="model">type.master</field>
+        <field name="arch" type="xml">
+            <tree string="Type" editable="bottom">
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_market_master_tree" model="ir.ui.view">
+        <field name="name">market.master.tree.view</field>
+        <field name="model">market.master</field>
+        <field name="arch" type="xml">
+            <tree string="Market" editable="bottom">
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_brands_master_tree" model="ir.ui.view">
+        <field name="name">brands.master.tree.view</field>
+        <field name="model">brands.master</field>
+        <field name="arch" type="xml">
+            <tree string="Brands" editable="bottom">
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_make_master_tree" model="ir.ui.view">
+        <field name="name">make.master.tree.view</field>
+        <field name="model">make.master</field>
+        <field name="arch" type="xml">
+            <tree string="Make" editable="bottom">
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_artical_master_tree" model="ir.ui.view">
+        <field name="name">artical.master.tree.view</field>
+        <field name="model">artical.market.code.master</field>
+        <field name="arch" type="xml">
+            <tree string="Artical / Market Code" editable="bottom">
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!--    actions-->
+    <record id="action_season_form" model="ir.actions.act_window">
+        <field name="name">Season</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">season.master</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create new data
+            </p>
+        </field>
+    </record>
+    <record id="action_origin_master_form" model="ir.actions.act_window">
+        <field name="name">Origin</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">origin.master</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create new data
+            </p>
+        </field>
+    </record>
+    <record id="action_type_master_form" model="ir.actions.act_window">
+        <field name="name">Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">type.master</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create new data
+            </p>
+        </field>
+    </record>
+    <record id="action_market_master_form" model="ir.actions.act_window">
+        <field name="name">Market</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">market.master</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create new data
+            </p>
+        </field>
+    </record>
+    <record id="action_brands_master_form" model="ir.actions.act_window">
+        <field name="name">Brands</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">brands.master</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create new data
+            </p>
+        </field>
+    </record>
+    <record id="action_make_master_form" model="ir.actions.act_window">
+        <field name="name">Make</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">make.master</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create new data
+            </p>
+        </field>
+    </record>
+    <record id="action_artical_master_form" model="ir.actions.act_window">
+        <field name="name">Artical / Market Code</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">artical.market.code.master</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create new data
+            </p>
+        </field>
+    </record>
+
+    <!--    inherit-->
+    <record id="inherit_master_data_product_template_form_view" model="ir.ui.view">
+        <field name="name">inherit.master.data.product.template.form.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='options']" position="after">
+                <div name="options2">
+                    <span class="d-inline-block" attrs="{'invisible': [('fg' , '=', True)]}" force_save="1">
+                        <field name="raw"/>
+                        <label for="raw"/>
+                    </span>
+                    <span class="d-inline-block" attrs="{'invisible': [('raw' , '=', True)]}" force_save="1">
+                        <field name="fg"/>
+                        <label for="fg"/>
+                    </span>
+                </div>
+            </xpath>
+            <xpath expr="//page[@name='general_information']/group[1]" position="after">
+                <group>
+                    <group>
+                        <field name="season_id" attrs="{'invisible': [('raw' , '=', True)]}"/>
+                        <field name="origin_id" attrs="{'invisible': [('raw' , '=', True)]}"/>
+                        <field name="type_id" attrs="{'invisible': [('raw' , '=', True)]}"/>
+
+                        <field name="make_id" attrs="{'invisible': [('fg' , '=', True)]}"/>
+                    </group>
+                    <group>
+                        <field name="artical_market_code" attrs="{'invisible': [('fg' , '=', True)]}"/>
+
+                        <field name="market_id" attrs="{'invisible': [('raw' , '=', True)]}"/>
+                        <field name="brands_id" attrs="{'invisible': [('raw' , '=', True)]}"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!--    menus-->
+    <menuitem id="menu_season"
+              action="action_season_form"
+              name="Season"
+              parent="purchase.menu_product_in_config_purchase"
+              sequence="3"/>
+    <menuitem id="menu_origin"
+              action="action_origin_master_form"
+              name="Origin"
+              parent="purchase.menu_product_in_config_purchase"
+              sequence="4"/>
+    <menuitem id="menu_type"
+              action="action_type_master_form"
+              name="Type"
+              parent="purchase.menu_product_in_config_purchase"
+              sequence="5"/>
+    <menuitem id="menu_market"
+              action="action_market_master_form"
+              name="Market"
+              parent="purchase.menu_product_in_config_purchase"
+              sequence="6"/>
+    <menuitem id="menu_brands"
+              action="action_brands_master_form"
+              name="Brands"
+              parent="purchase.menu_product_in_config_purchase"
+              sequence="7"/>
+    <menuitem id="menu_make"
+              action="action_make_master_form"
+              name="Make"
+              parent="purchase.menu_product_in_config_purchase"
+              sequence="8"/>
+    <menuitem id="menu_artical_market_code"
+              action="action_artical_master_form"
+              name="Artical / Market Code"
+              parent="purchase.menu_product_in_config_purchase"
+              sequence="9"/>
+
+
+</odoo>

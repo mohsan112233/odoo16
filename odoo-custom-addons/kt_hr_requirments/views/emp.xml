@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    <record id="hr_payroll.menu_hr_payroll_contracts_configuration" model="ir.ui.menu">-->
+<!--        <field name="name">Employee Agreement</field>-->
+<!--    </record>-->
+<!--    <record id="hr_contract.menu_human_resources_configuration_contract" model="ir.ui.menu">-->
+<!--        <field name="name">Employee Agreement</field>-->
+<!--    </record>-->
+
+<!--        <menuitem-->
+<!--            id="hr_work_entry_contract_enterprise.hr_menu_contract"-->
+<!--            name="Employee Agreements"-->
+<!--            action="hr_contract.action_hr_contract"-->
+<!--            parent="hr.menu_hr_employee_payroll"-->
+<!--            sequence="6"-->
+<!--            groups="hr_contract.group_hr_contract_manager"/>-->
+<!--&lt;!&ndash;    <record id="hr_contract.hr_menu_contract" model="ir.ui.menu">&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="name">Employee Agreement</field>&ndash;&gt;-->
+<!--&lt;!&ndash;    </record>&ndash;&gt;-->
+<!--    <record id="hr_contract.action_hr_contract" model="ir.actions.act_window">-->
+<!--        <field name="name">Employee Agreement</field>-->
+<!--    </record>-->
+<!--    <record id="hr_payroll.action_hr_contract_repository" model="ir.actions.act_window">-->
+<!--        <field name="name">Employee Agreement</field>-->
+<!--    </record>-->
+    <record id="hr_contract.hr_contract_view_tree" model="ir.ui.view">
+            <field name="name">hr.contract.tree</field>
+            <field name="model">hr.contract</field>
+            <field name="arch" type="xml">
+                <tree string="Agreements" multi_edit="1" sample="1" default_order='date_start ASC'>
+                    <field name="name" readonly="1"/>
+                    <field name="employee_id" readonly="1" widget="many2one_avatar_employee"/>
+<!--                    <field name="job_id"/>-->
+                    <field name="date_start" readonly="1"/>
+                    <field name="date_end" readonly="1"/>
+<!--                    <field name="resource_calendar_id" optional="show"/>-->
+                    <field name="structure_type_id" optional="show"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'close'" decoration-success="state == 'open'"/>
+                    <field name="wage" invisible="1"/>
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="company_id" groups="base.group_multi_company" readonly="1" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+    <record id="hr_payroll.action_hr_contract_repository" model="ir.actions.act_window">
+        <field name="name">Agreements</field>
+        <field name="res_model">hr.contract</field>
+        <field name="view_mode">kanban,tree,form,activity</field>
+        <field name="domain">[('employee_id', '!=', False)]</field>
+        <field name="context">{'search_default_running': 1, 'search_default_to_renew': 1}</field>
+        <field name="search_view_id" ref="hr_contract.hr_contract_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Create a new Agreement
+            </p>
+        </field>
+    </record>
+    <menuitem
+        id="hr_contract.hr_menu_contract_history"
+        action="hr_contract.hr_contract_history_view_list_action"
+        parent="hr.menu_hr_employee_payroll"
+        name="Agreements"
+        sequence="4"
+        groups="hr_contract.group_hr_contract_manager"/>
+
+    <menuitem
+            id="hr_work_entry_contract_enterprise.hr_menu_contract"
+            name="All Agreements"
+            action="hr_contract.action_hr_contract"
+            parent="hr.menu_hr_employee_payroll"
+            sequence="6"
+            groups="hr_contract.group_hr_contract_manager"/>
+    <menuitem
+        id="hr_payroll.menu_hr_payroll_employees_root"
+        name="Agreements"
+        parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"
+        sequence="50"
+        groups="hr_payroll.group_hr_payroll_user"/>
+
+    <menuitem
+        id="hr_payroll.hr_menu_all_contracts"
+        name="Agreements"
+        action="hr_contract.action_hr_contract"
+        parent="hr_payroll.menu_hr_payroll_employees_root"
+        sequence="30"/>
+
+
+    <record id="hr_contract.action_hr_contract" model="ir.actions.act_window">
+        <field name="name">Employee Agreement</field>
+    </record>
+    <record id="hr_payroll.action_hr_contract_repository" model="ir.actions.act_window">
+        <field name="name">Employee Agreement</field>
+    </record>
+</odoo>
+
+
+

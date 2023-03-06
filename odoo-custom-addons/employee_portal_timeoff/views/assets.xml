@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="leave_portal_assets_frontend" 
+              inherit_id="website.assets_frontend" name="Leave Portal Assets">
+      <xpath expr="." position="inside">
+          <script type="text/javascript" 
+                  src="/employee_portal_timeoff/static/src/js/leave_portal.js"></script>
+          <script type="text/javascript" 
+                  src="/employee_portal_timeoff/static/src/js/portal_timeoff.js"></script>
+          <link rel="stylesheet" href="/employee_portal_timeoff/static/src/scss/custom_style.scss" />
+      </xpath>
+    </template>
+</odoo>
